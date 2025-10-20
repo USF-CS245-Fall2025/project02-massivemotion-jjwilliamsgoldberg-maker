@@ -3,6 +3,7 @@
  * CS245 (EJ)
  * Doubly-linked list implementation.
  */
+
 public class DoublyLinkedList<T> implements List<T> {
     
     private class Node {

@@ -76,6 +76,7 @@ public class MassiveMotion extends JPanel implements ActionListener {
     /**
      * Updates simulation and repaints each timer tick.
      */
+    
     @Override
     public void actionPerformed(ActionEvent e) {
         // Move bodies

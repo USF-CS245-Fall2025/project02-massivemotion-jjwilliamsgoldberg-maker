@@ -3,6 +3,7 @@
  * CS245 (EJ)
  * Array-based list implementation.
  */
+
 public class ArrayList<T> implements List<T> {
     
     private T[] data;

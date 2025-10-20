@@ -3,6 +3,7 @@
  * CS245 (EJ)
  * Linked list with dummy head node.
  */
+
 public class DummyHeadLinkedList<T> implements List<T> {
     
     private class Node {

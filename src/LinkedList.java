@@ -3,6 +3,7 @@
  * CS245 (EJ)
  * Singly-linked list implementation.
  */
+
 public class LinkedList<T> implements List<T> {
     
     private class Node {

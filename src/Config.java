@@ -2,6 +2,7 @@
  * Julian Williams-Goldberg
  * CS245 (EJ)
  */
+
 import java.io.FileInputStream;
 import java.util.Properties;
 
