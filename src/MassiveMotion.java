@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Main simulation class for celestial bodies.
+ * Extends JPanel to provide a drawable surface and implements ActionListener for timer events.
  */
 public class MassiveMotion extends JPanel implements ActionListener {
     
@@ -20,7 +21,7 @@ public class MassiveMotion extends JPanel implements ActionListener {
     private Config config;
     
     /**
-     * Creates simulation with default config file.
+     * Creates simulation with default config file named MassiveMotion.txt.
      */
     public MassiveMotion() {
         this("MassiveMotion.txt");
@@ -28,6 +29,8 @@ public class MassiveMotion extends JPanel implements ActionListener {
     
     /**
      * Creates simulation with specified config file.
+     * 
+     * @param configFile the path to the configuration file
      */
     public MassiveMotion(String configFile) {
         config = new Config(configFile);
@@ -57,7 +60,10 @@ public class MassiveMotion extends JPanel implements ActionListener {
     }
     
     /**
-     * Creates the appropriate list type based on config.
+     * Creates the appropriate list type based on configuration string.
+     * 
+     * @param type the type of list (arraylist, single, double, or dummyhead)
+     * @return a new list of the specified type
      */
     private List<Body> createList(String type) {
         type = type.toLowerCase();
@@ -75,8 +81,10 @@ public class MassiveMotion extends JPanel implements ActionListener {
     
     /**
      * Updates simulation and repaints each timer tick.
+     * Moves bodies, removes off-canvas bodies, and generates new comets.
+     * 
+     * @param e the action event from the timer
      */
-    
     @Override
     public void actionPerformed(ActionEvent e) {
         // Move bodies
@@ -84,7 +92,7 @@ public class MassiveMotion extends JPanel implements ActionListener {
             bodies.get(i).move();
         }
         
-        // Remove off-canvas bodies
+        // Remove off-canvas bodies (iterate backwards to avoid index shifting)
         for (int i = bodies.size() - 1; i >= 0; i--) {
             Body b = bodies.get(i);
             if (!b.isStar && (b.x < 0 || b.x > width || b.y < 0 || b.y > height)) {
@@ -92,7 +100,7 @@ public class MassiveMotion extends JPanel implements ActionListener {
             }
         }
         
-        // Generate new bodies
+        // Generate new bodies based on probabilities
         double genX = config.getDouble("gen_x", 0.06);
         double genY = config.getDouble("gen_y", 0.06);
         double bodySize = config.getDouble("body_size", 10);
@@ -123,6 +131,8 @@ public class MassiveMotion extends JPanel implements ActionListener {
     
     /**
      * Draws all celestial bodies on the screen.
+     * 
+     * @param g the graphics context
      */
     @Override
     protected void paintComponent(Graphics g) {
@@ -143,6 +153,8 @@ public class MassiveMotion extends JPanel implements ActionListener {
     
     /**
      * Main method to launch the simulation.
+     * 
+     * @param args command line arguments, first argument can be config file path
      */
     public static void main(String[] args) {
         String configFile = args.length > 0 ? args[0] : "MassiveMotion.txt";
@@ -159,13 +171,24 @@ public class MassiveMotion extends JPanel implements ActionListener {
     }
     
     /**
-     * Simple class to represent a celestial body.
+     * Simple class to represent a celestial body with position, velocity, and appearance.
      */
     private class Body {
         double x, y, vx, vy, size;
         Color color;
         boolean isStar;
         
+        /**
+         * Creates a new Body with specified properties.
+         * 
+         * @param x initial x position
+         * @param y initial y position
+         * @param vx x velocity in pixels per update
+         * @param vy y velocity in pixels per update
+         * @param size radius in pixels
+         * @param color color to draw the body
+         * @param isStar true if this is a star (never removed)
+         */
         Body(double x, double y, double vx, double vy, double size, Color color, boolean isStar) {
             this.x = x;
             this.y = y;
@@ -176,6 +199,9 @@ public class MassiveMotion extends JPanel implements ActionListener {
             this.isStar = isStar;
         }
         
+        /**
+         * Moves the body based on its velocity.
+         */
         void move() {
             x += vx;
             y += vy;

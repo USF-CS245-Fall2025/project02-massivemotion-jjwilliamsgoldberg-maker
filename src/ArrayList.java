@@ -1,9 +1,11 @@
 /**
  * Julian Williams-Goldberg
  * CS245 (EJ)
- * Array-based list implementation.
+ * Array-based list implementation with dynamic resizing.
+ * Initial capacity is 10 and doubles when full.
+ * 
+ * @param <T> the type of elements stored in the list
  */
-
 public class ArrayList<T> implements List<T> {
     
     private T[] data;
@@ -19,7 +21,11 @@ public class ArrayList<T> implements List<T> {
     }
     
     /**
-     * Adds element at a specific index.
+     * Adds element at a specific index, shifting elements to the right.
+     * 
+     * @param index the position where element should be inserted
+     * @param element the element to add
+     * @throws IndexOutOfBoundsException if index is out of range
      */
     @Override
     public void add(int index, T element) {
@@ -41,6 +47,9 @@ public class ArrayList<T> implements List<T> {
     
     /**
      * Adds element to the end of the list.
+     * 
+     * @param element the element to add
+     * @return true if element was added successfully
      */
     @Override
     public boolean add(T element) {
@@ -53,6 +62,10 @@ public class ArrayList<T> implements List<T> {
     
     /**
      * Gets the element at the specified index.
+     * 
+     * @param index the position of the element to retrieve
+     * @return the element at the specified position
+     * @throws IndexOutOfBoundsException if index is out of range
      */
     @Override
     public T get(int index) {
@@ -64,6 +77,10 @@ public class ArrayList<T> implements List<T> {
     
     /**
      * Removes and returns the element at the specified index.
+     * 
+     * @param index the position of the element to remove
+     * @return the element that was removed
+     * @throws IndexOutOfBoundsException if index is out of range
      */
     @Override
     public T remove(int index) {
@@ -83,13 +100,17 @@ public class ArrayList<T> implements List<T> {
     
     /**
      * Returns the number of elements in the list.
+     * 
+     * @return the number of elements
      */
     @Override
     public int size() {
         return size;
     }
     
-    // Doubles the array capacity when needed
+    /**
+     * Doubles the array capacity when the array is full.
+     */
     @SuppressWarnings("unchecked")
     private void resize() {
         T[] newData = (T[]) new Object[data.length * 2];
