@@ -33,8 +33,11 @@ Go into the src folder and compile:
 ```
 javac *.java
 ```
-
-Then run:
+Then run with the config file:
+```
+java MassiveMotion MassiveMotion.txt
+```
+Or just run with defaults:
 ```
 java MassiveMotion
 ```
